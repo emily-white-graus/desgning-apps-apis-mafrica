@@ -3,29 +3,28 @@
 ```mermaid
 flowchart LR
 
-  %% boundary = one database in MVP
-  subgraph SQLDB["Relational database (SQL)"]
-    U[Users\n- id (pk)\n- email (unique)\n- role (employee|technician|supervisor)\n- created_at]
-    L[Locations\n- id (pk)\n- name\n- building\n- floor]
-    R[ServiceRequests\n- id (pk)\n- title\n- description\n- status (open|in_progress|resolved)\n- priority\n- created_by_user_id (fk)\n- location_id (fk)\n- created_at]
-    A[Assignments\n- id (pk)\n- request_id (fk)\n- technician_user_id (fk)\n- assigned_by_user_id (fk)\n- assigned_at]
-    C[Comments\n- id (pk)\n- request_id (fk)\n- author_user_id (fk)\n- body\n- created_at]
+  %% database boundary
+  subgraph SQLDB["Relational database"]
+    Users[Users: id, email, role, created_at]
+    Locations[Locations: id, name, building, floor]
+    Requests[ServiceRequests: id, title, status, priority, created_at]
+    Assignments[Assignments: id, request_id, technician_id, assigned_at]
+    Comments[Comments: id, request_id, author_id, body, created_at]
   end
 
-  %% 1-n / n-1 (single-ended arrows with labels)
-  U -->|1..n creates| R
-  L -->|1..n has| R
+  %% relationships
+  Users -->|1 to many| Requests
+  Locations -->|1 to many| Requests
 
-  R -->|1..n has| C
-  U -->|1..n writes| C
+  Requests -->|1 to many| Comments
+  Users -->|1 to many| Comments
 
-  %% n-n (double-ended arrow via join table)
-  U <--> |n..n via Assignments| R
+  Users <--> |many to many| Requests
 
-  %% also show the join table explicitly (each side is 1..n)
-  R -->|1..n has| A
-  U -->|1..n assigned to (technician)| A
-  U -->|1..n assigned by (supervisor)| A
+  %% join table relationships
+  Requests -->|1 to many| Assignments
+  Users -->|1 to many| Assignments
+
 ```
 
 ### Notes
