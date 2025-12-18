@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MafricaFix Pitch Deck</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: rgba(15, 23, 42, 0.72);
+      --accent: #7dd3fc;
+      --accent-2: #38bdf8;
+      --muted: #cbd5e1;
+      --text: #e2e8f0;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Futura", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.12), transparent 25%),
+                  var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 32px 16px 48px;
+    }
+
+    .deck {
+      width: min(1100px, 100%);
+      max-width: 1100px;
+      position: relative;
+    }
+
+    .chrome {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 12px 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(120deg, rgba(124, 58, 237, 0.08), rgba(14, 165, 233, 0.12));
+      border: 1px solid rgba(148, 163, 184, 0.24);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo svg {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 4px 12px rgba(125, 211, 252, 0.25));
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(125, 211, 252, 0.4);
+      background: rgba(125, 211, 252, 0.15);
+      color: #e0f2fe;
+      font-size: 13px;
+    }
+
+    .slide {
+      position: relative;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+                  var(--card);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(20px, 3vw, 32px);
+      overflow: hidden;
+      min-height: 520px;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 70%);
+      top: -60px;
+      right: -60px;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .slide h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 38px);
+      letter-spacing: -0.5px;
+      color: #e2e8f0;
+    }
+
+    .slide h2 {
+      margin: 4px 0 20px;
+      font-weight: 500;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 18px);
+    }
+
+    .cover-logo {
+      display: none;
+      margin-bottom: 16px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .cover-logo svg {
+      width: 110px;
+      height: 110px;
+      filter: drop-shadow(0 20px 40px rgba(56, 189, 248, 0.35));
+    }
+
+    .slide ul {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+      font-size: clamp(15px, 2vw, 18px);
+      line-height: 1.45;
+      list-style: none;
+    }
+
+    .slide li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      color: #cbd5e1;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .controls {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      background: linear-gradient(120deg, var(--accent-2), var(--accent));
+      color: #0b1224;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.25);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow: none;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 8px 18px rgba(56, 189, 248, 0.25);
+      filter: brightness(0.98);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      transition: width 180ms ease;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      color: var(--accent);
+      opacity: 0.95;
+      transform: translateY(2px);
+    }
+
+    .icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 720px) {
+      body { padding: 16px 12px 32px; }
+      .slide { min-height: 420px; }
+      .chrome { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .controls { flex-direction: column; align-items: flex-start; }
+      .buttons { width: 100%; }
+      .buttons button { flex: 1; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <div class="chrome">
+      <div class="brand">
+        <span class="logo">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MafricaFix logo">
+            <rect x="6" y="10" width="52" height="44" rx="12" fill="url(#grad)" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+            <path d="M18 34c5.2-6.8 9.3-10.2 12.2-10.2C35 23.8 37 32 39 32c2 0 5-5 7-5 3 0 5 4.5 5 9.2 0 6.3-4.7 11.8-10.5 11.8-5.7 0-8.5-5.4-9.5-8.2-.7-2-1.7-3-3.4-3-1.9 0-3.7 1.7-5.7 5.2-1.8 3-4.4 4.6-8.1 4.6" stroke="#e0f2fe" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="30" cy="20" r="3" fill="#e0f2fe"/>
+            <defs>
+              <linearGradient id="grad" x1="8" y1="12" x2="58" y2="52" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#38bdf8"/>
+                <stop offset="1" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          MafricaFix
+        </span>
+        <span class="badge">Pitch Deck</span>
+      </div>
+      <div class="meta" id="hint">Use ← → or space to navigate</div>
+    </div>
+
+    <div class="slide">
+      <div class="cover-logo" id="cover-logo"></div>
+      <div class="pill-row" id="tags"></div>
+      <h1 id="title"></h1>
+      <h2 id="subtitle"></h2>
+      <ul id="points"></ul>
+    </div>
+
+    <div class="controls">
+      <div class="buttons">
+        <button class="secondary" id="prev">Previous</button>
+        <button id="next">Next</button>
+      </div>
+      <div class="meta" id="position"></div>
+      <div class="progress"><span id="progress-bar"></span></div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [
+      {
+        title: "MafricaFix",
+        subtitle: "Facility maintenance made visible, fast, and accountable.",
+        tags: ["Cover"],
+        points: [
+          { icon: "spark", text: "Pitch deck" }
+        ]
+      },
+      {
+        title: "Opening",
+        subtitle: "MafricaFix keeps maintenance visible, fast, accountable.",
+        tags: ["Pitch", "5–7 min"],
+        points: [
+          { icon: "rocket", text: "One home for reporting, routing, fixing." },
+          { icon: "users", text: "Built for supervisors, technicians, employees." }
+        ]
+      },
+      {
+        title: "Problem",
+        subtitle: "Work scattered across email/WhatsApp; no trail.",
+        tags: ["Pain"],
+        points: [
+          { icon: "alert", text: "No backlog view or SLA signal." },
+          { icon: "mail", text: "Updates lost; technicians juggle pings." },
+          { icon: "clock", text: "Employees re-report; resolution slows." }
+        ]
+      },
+      {
+        title: "Solution",
+        subtitle: "Role-focused web apps on one main API.",
+        tags: ["Clarity"],
+        points: [
+          { icon: "flow", text: "Submit → assign → update → resolve with alerts." },
+          { icon: "shield", text: "Permissions by role; clear ownership." },
+          { icon: "spark", text: "Async notifications keep UI quick." }
+        ]
+      },
+      {
+        title: "User Wins",
+        subtitle: "Each persona gets a clear benefit.",
+        tags: ["Value"],
+        points: [
+          { icon: "photo", text: "Employees: fast intake, photos, status." },
+          { icon: "queue", text: "Technicians: prioritized queue, crisp assignments." },
+          { icon: "chart", text: "Supervisors: live backlog, workload balance." }
+        ]
+      },
+      {
+        title: "Architecture",
+        subtitle: "Simple now, ready to grow.",
+        tags: ["Monolith", "Async", "Postgres"],
+        points: [
+          { icon: "layers", text: "Layered monolith API over HTTPS + JSON." },
+          { icon: "db", text: "PostgreSQL for requests, users, assignments, comments." },
+          { icon: "worker", text: "Worker sends emails; SSO optional later." }
+        ]
+      },
+      {
+        title: "Data Model",
+        subtitle: "One SQL boundary for consistency.",
+        tags: ["Schema"],
+        points: [
+          { icon: "table", text: "Tables: users, service_requests, assignments, comments, locations." },
+          { icon: "link", text: "Relations: users ↔ requests (assignments), requests → comments." },
+          { icon: "lock", text: "No cross-service drift; simple migrations." }
+        ]
+      },
+      {
+        title: "API Snapshot",
+        subtitle: "Minimal verbs, strong auth.",
+        tags: ["REST"],
+        points: [
+          { icon: "auth", text: "POST /auth/login for session/token; role checks on every call." },
+          { icon: "endpoint", text: "POST /requests, GET /requests, GET /requests/{id}." },
+          { icon: "report", text: "PATCH /requests/{id}; GET /reports/open-vs-resolved." }
+        ]
+      },
+      {
+        title: "Request Journey",
+        subtitle: "AC leak in Room 3B.",
+        tags: ["Flow"],
+        points: [
+          { icon: "submit", text: "Submit → API stores → enqueue created." },
+          { icon: "assign", text: "Assign → enqueue assigned_to_tech." },
+          { icon: "check", text: "Tech marks progress/resolved → worker emails." }
+        ]
+      },
+      {
+        title: "Fit for Mafrica",
+        subtitle: "Internal scope, predictable load.",
+        tags: ["Fit"],
+        points: [
+          { icon: "compass", text: "Monolith = faster build, simpler ops." },
+          { icon: "speed", text: "Async worker keeps interactions responsive." },
+          { icon: "upgrade", text: "Phase I: queue durability, attachments, monitoring, SSO." }
+        ]
+      },
+      {
+        title: "Risks",
+        subtitle: "Unknowns to watch.",
+        tags: ["Risks"],
+        points: [
+          { icon: "adoption", text: "Adoption vs side channels." },
+          { icon: "data", text: "Data quality (locations/assets)." },
+          { icon: "reliability", text: "Notification reliability (need retries)." },
+          { icon: "identity", text: "Identity path (SSO vs fallback)." },
+          { icon: "scope", text: "Scope creep on reporting/real-time." }
+        ]
+      },
+      {
+        title: "Path",
+        subtitle: "Deliver fast, then harden.",
+        tags: ["Roadmap"],
+        points: [
+          { icon: "calendar", text: "MVP 4–6 wks: CRUD, roles, status, email alerts, dashboards." },
+          { icon: "queue", text: "Phase I: durable queue, attachments, monitoring, optional SSO." },
+          { icon: "team", text: "Team: 3 devs (frontend, backend, platform/worker)." }
+        ]
+      },
+      {
+        title: "Close",
+        subtitle: "Make maintenance predictable.",
+        tags: ["Go/No-Go"],
+        points: [
+          { icon: "check", text: "Clearer intake, faster routing, accountable follow-through." },
+          { icon: "handshake", text: "Ask: greenlight MVP, confirm SSO direction early." }
+        ]
+      }
+    ];
+
+    const titleEl = document.getElementById("title");
+    const subtitleEl = document.getElementById("subtitle");
+    const pointsEl = document.getElementById("points");
+    const tagsEl = document.getElementById("tags");
+    const positionEl = document.getElementById("position");
+    const progressBar = document.getElementById("progress-bar");
+    const nextBtn = document.getElementById("next");
+    const prevBtn = document.getElementById("prev");
+    const hintEl = document.getElementById("hint");
+    const coverLogo = document.getElementById("cover-logo");
+
+    const icons = {
+      rocket: `<path d="M32 8c5.5 3.4 9 9.8 9 16.6 0 6.3-3.2 12.5-8.3 16.1l-.7 7.3-4-4-6.7 2.6 1.8-6.8c-3.6-3.4-5.8-8.3-5.8-13.2 0-7.4 5.1-14.5 14.7-18.6z"/><circle cx="32" cy="24" r="4"/>`,
+      users: `<circle cx="24" cy="26" r="6"/><circle cx="40" cy="26" r="6"/><path d="M18 40c0-4 3.6-7 8-7h0"/><path d="M34 33h0c4.4 0 8 3 8 7"/><path d="M30 44h4"/>`,
+      alert: `<path d="M32 12 12 48h40L32 12z"/><path d="M32 26v10"/><circle cx="32" cy="40" r="1.5"/>`,
+      mail: `<rect x="14" y="20" width="36" height="24" rx="4"/><path d="m16 22 16 12 16-12"/>`,
+      clock: `<circle cx="32" cy="32" r="14"/><path d="M32 24v10l6 3"/>`,
+      flow: `<path d="M18 18h12a6 6 0 1 1 0 12h-6"/><path d="M36 34h10"/><path d="m30 30-6 4 6 4"/><circle cx="42" cy="34" r="3"/>`,
+      shield: `<path d="M32 12 18 18v12c0 8 5.6 15.6 14 18 8.4-2.4 14-10 14-18V18L32 12z"/><path d="m24 32 6 6 10-12"/>`,
+      spark: `<path d="m32 10 3 12 11-5-7 10 11 5-12 1 2 11-8-9-8 9 2-11-12-1 11-5-7-10 11 5 3-12z" stroke-width="1.5"/>`,
+      photo: `<rect x="14" y="20" width="36" height="24" rx="4"/><circle cx="36" cy="32" r="6"/><path d="M22 22l2-4h8l2 4"/>`,
+      queue: `<rect x="16" y="18" width="32" height="28" rx="4"/><path d="M22 26h20"/><path d="M22 34h20"/><path d="M22 42h12"/>`,
+      chart: `<path d="M18 42h28"/><rect x="20" y="30" width="6" height="12" rx="1"/><rect x="30" y="24" width="6" height="18" rx="1"/><rect x="40" y="18" width="6" height="24" rx="1"/>`,
+      layers: `<rect x="18" y="18" width="28" height="16" rx="3"/><path d="m20 34 12 8 12-8"/><path d="m20 26 12 8 12-8"/>`,
+      db: `<ellipse cx="32" cy="18" rx="14" ry="6"/><path d="M18 18v16c0 3.3 6.3 6 14 6s14-2.7 14-6V18"/><path d="M18 26c0 3.3 6.3 6 14 6s14-2.7 14-6"/>`,
+      worker: `<circle cx="32" cy="32" r="10"/><path d="m32 18 1 4"/><path d="m42 26-3 1"/><path d="m40 40-2-3"/><path d="m24 40 2-3"/><path d="m22 27 3 1"/><path d="M32 30v4"/><path d="M28 32h8"/>`,
+      table: `<rect x="16" y="18" width="32" height="28" rx="3"/><path d="M16 28h32"/><path d="M28 18v28"/><path d="M40 18v28"/>`,
+      link: `<path d="M26 38h-6a6 6 0 0 1 0-12h6"/><path d="M38 26h6a6 6 0 1 1 0 12h-6"/><path d="M30 32h4"/>`,
+      lock: `<rect x="20" y="28" width="24" height="18" rx="3"/><path d="M24 28v-4a8 8 0 0 1 16 0v4"/><path d="M32 34v6"/>`,
+      auth: `<rect x="20" y="22" width="24" height="20" rx="4"/><circle cx="28" cy="32" r="3"/><path d="M36 32h4"/><path d="M36 28h4"/><path d="M36 36h4"/>`,
+      endpoint: `<rect x="14" y="22" width="36" height="20" rx="4"/><path d="M20 32h24"/><path d="M20 26h6"/><path d="M20 38h6"/>`,
+      report: `<rect x="16" y="16" width="32" height="32" rx="4"/><path d="M24 36v8"/><path d="M32 32v12"/><path d="M40 28v16"/><path d="M20 28h24"/>`,
+      submit: `<rect x="18" y="24" width="28" height="20" rx="3"/><path d="M32 18v16"/><path d="m26 24 6-6 6 6"/>`,
+      assign: `<circle cx="24" cy="30" r="5"/><path d="M18 42c0-3.5 3-6 6-6"/><rect x="34" y="26" width="12" height="12" rx="3"/><path d="m34 32h-4"/>`,
+      check: `<circle cx="32" cy="32" r="12"/><path d="m26 32 4 4 8-8"/>`,
+      compass: `<circle cx="32" cy="32" r="12"/><path d="m28 36 4-12 8 8-12 4z"/>`,
+      speed: `<path d="M16 36a16 16 0 1 1 32 0"/><path d="m32 32 8-6"/><path d="M18 40h28"/>`,
+      upgrade: `<rect x="20" y="26" width="24" height="18" rx="3"/><path d="M32 20v8"/><path d="m26 26 6-6 6 6"/>`,
+      adoption: `<path d="M18 34a6 6 0 1 1 12 0v8H18v-8z"/><circle cx="24" cy="26" r="4"/><path d="M36 32h6l4 4v6h-10z"/>`,
+      data: `<ellipse cx="24" cy="24" rx="6" ry="3"/><path d="M18 24v8c0 2 3 4 6 4s6-2 6-4v-8"/><ellipse cx="40" cy="34" rx="6" ry="3"/><path d="M34 34v8c0 2 3 4 6 4s6-2 6-4v-8"/>`,
+      reliability: `<circle cx="32" cy="32" r="10"/><circle cx="32" cy="32" r="4"/><path d="m32 18 0.5 4"/><path d="m44 32-4 .5"/><path d="m32 44-0.5-4"/><path d="m20 32 4-.5"/>`,
+      identity: `<rect x="18" y="22" width="28" height="20" rx="4"/><circle cx="26" cy="30" r="3"/><path d="M22 38c0-2.2 1.8-4 4-4"/><path d="M32 26h10"/><path d="M32 32h6"/>`,
+      scope: `<circle cx="32" cy="32" r="10"/><path d="M32 18v4"/><path d="M32 42v4"/><path d="M18 32h4"/><path d="M42 32h4"/><circle cx="32" cy="32" r="3"/>`,
+      calendar: `<rect x="18" y="20" width="28" height="24" rx="4"/><path d="M22 16v8"/><path d="M42 16v8"/><path d="M18 28h28"/><path d="M24 34h6"/><path d="M24 40h6"/>`,
+      team: `<circle cx="26" cy="30" r="4"/><circle cx="38" cy="32" r="4"/><path d="M20 40c0-3 2.7-5 6-5"/><path d="M32 37c3.3 0 6 2 6 5"/><path d="M30 28c0-2 2-4 5-4"/>`,
+      handshake: `<path d="m20 30 6 6c1.5 1.5 4 1.5 5.5 0l4.5-4"/><path d="m18 28 4-4 6 6 4-4 6 6"/><path d="M18 32v-6"/><path d="M46 24v10"/><path d="M22 38l-2 2"/><path d="M40 32l4 4"/>`
+    };
+
+    function createIcon(type) {
+      const svg = icons[type] || `<circle cx="32" cy="32" r="10"/>`;
+      const span = document.createElement("span");
+      span.className = "icon";
+      span.innerHTML = `<svg viewBox="0 0 64 64" aria-hidden="true">${svg}</svg>`;
+      return span;
+    }
+
+    const coverMark = `
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="MafricaFix cover logo">
+        <rect x="6" y="10" width="52" height="44" rx="12" fill="url(#grad2)" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+        <path d="M18 34c5.2-6.8 9.3-10.2 12.2-10.2C35 23.8 37 32 39 32c2 0 5-5 7-5 3 0 5 4.5 5 9.2 0 6.3-4.7 11.8-10.5 11.8-5.7 0-8.5-5.4-9.5-8.2-.7-2-1.7-3-3.4-3-1.9 0-3.7 1.7-5.7 5.2-1.8 3-4.4 4.6-8.1 4.6" stroke="#e0f2fe" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="30" cy="20" r="3" fill="#e0f2fe"/>
+        <defs>
+          <linearGradient id="grad2" x1="8" y1="12" x2="58" y2="52" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#38bdf8"/>
+            <stop offset="1" stop-color="#7c3aed"/>
+          </linearGradient>
+        </defs>
+      </svg>`;
+
+    let index = 0;
+
+    function render() {
+      const current = slides[index];
+      titleEl.textContent = current.title;
+      subtitleEl.textContent = current.subtitle;
+      if (index === 0) {
+        coverLogo.style.display = "flex";
+        coverLogo.innerHTML = coverMark;
+      } else {
+        coverLogo.style.display = "none";
+        coverLogo.innerHTML = "";
+      }
+
+      tagsEl.innerHTML = "";
+      current.tags.forEach(tag => {
+        const pill = document.createElement("span");
+        pill.className = "pill";
+        pill.textContent = tag;
+        tagsEl.appendChild(pill);
+      });
+
+      pointsEl.innerHTML = "";
+      current.points.forEach((point, i) => {
+        const li = document.createElement("li");
+        const iconEl = createIcon(point.icon);
+        const text = document.createElement("span");
+        text.textContent = point.text;
+        li.appendChild(iconEl);
+        li.appendChild(text);
+        li.classList.add("fade");
+        setTimeout(() => li.classList.add("show"), 120 + i * 80);
+        pointsEl.appendChild(li);
+      });
+
+      positionEl.textContent = `Slide ${index + 1} of ${slides.length}`;
+      const pct = ((index + 1) / slides.length) * 100;
+      progressBar.style.width = `${pct}%`;
+      prevBtn.disabled = index === 0;
+      nextBtn.textContent = index === slides.length - 1 ? "Restart" : "Next";
+      hintEl.textContent = index === slides.length - 1 ? "End reached—restart to replay" : "Use ← → or space to navigate";
+    }
+
+    function next() {
+      index = (index + 1) % slides.length;
+      render();
+    }
+
+    function prev() {
+      index = index === 0 ? slides.length - 1 : index - 1;
+      render();
+    }
+
+    nextBtn.addEventListener("click", next);
+    prevBtn.addEventListener("click", prev);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight" || e.key === " ") next();
+      if (e.key === "ArrowLeft") prev();
+    });
+
+    render();
+  </script>
+</body>
+</html>
